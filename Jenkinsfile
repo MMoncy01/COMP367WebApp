@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/MMoncy01/COMP367WebApp.git'
+                git credentialsId: 'github-credentials', branch: 'main', url: 'https://github.com/MMoncy01/COMP367WebApp.git'
             }
         }
         stage('Build') {
