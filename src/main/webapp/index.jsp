@@ -1,10 +1,17 @@
 <html>
-<head><title>Welcome</title></head>
+<head>
+    <title>Welcome</title>
+</head>
 <body>
     <%
         java.util.Calendar cal = java.util.Calendar.getInstance();
         int hour = cal.get(java.util.Calendar.HOUR_OF_DAY);
-        String greeting = (hour < 12) ? "Good morning, Mariya Ann Moncy" : "Good afternoon, Mariya Ann Moncy";
+        String greeting;
+        if (hour < 12) {
+            greeting = "Good morning, Mariya Ann Moncy";
+        } else {
+            greeting = "Good afternoon, Mariya Ann Moncy";
+        }
     %>
     <h1><%= greeting %>, Welcome to COMP367</h1>
 </body>
