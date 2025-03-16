@@ -6,12 +6,6 @@ pipeline {
         IMAGE_NAME = 'mariyaannmoncy/comp367webapp'
     }
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/MMoncy01/COMP367WebApp.git'
-            }
-        }
         
         stage('Build Maven Project') {
             steps {
