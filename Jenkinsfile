@@ -6,6 +6,7 @@ pipeline {
         IMAGE_NAME = 'mariyaannmoncy/comp367webapp'
     }
 
+    stages {
         
         stage('Build Maven Project') {
             steps {
