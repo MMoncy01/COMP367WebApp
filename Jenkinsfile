@@ -1,43 +1,40 @@
 pipeline {
     agent any
-
-    tools {
-        maven 'Maven' // Use the Maven tool configured in Jenkins
+    
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials')
+        IMAGE_NAME = 'mariyaannmoncy/comp367webapp'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git credentialsId: 'github-credentials', branch: 'main', url: 'https://github.com/MMoncy01/COMP367WebApp.git'
+                git 'https://github.com/MMoncy01/COMP367WebApp.git'
+            }
+        }
+        
+        stage('Build Maven Project') {
+            steps {
+                bat 'mvn clean package'
             }
         }
 
-        stage('Build') {
+        stage('Docker Login') {
             steps {
-                script {
-                    try {
-                        bat 'mvn clean package'
-                    } catch (Exception e) {
-                        error "Build failed: ${e.message}"
-                    }
-                }
+                bat "docker login -u %DOCKER_HUB_CREDENTIALS_USR% -p %DOCKER_HUB_CREDENTIALS_PSW%"
             }
         }
-
-        stage('Deploy') {
+        
+        stage('Build Docker Image') {
             steps {
-                echo 'Deploying the application...'
+                bat 'docker build -t %IMAGE_NAME% .'
             }
         }
-    }
-
-    post {
-        success {
-            echo 'Build and Deployment successful!'
-            archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
-        }
-        failure {
-            echo 'Build failed! Check logs for details.'
+        
+        stage('Push Docker Image') {
+            steps {
+                bat 'docker push %IMAGE_NAME%'
+            }
         }
     }
 }
