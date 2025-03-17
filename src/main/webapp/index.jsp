@@ -8,7 +8,7 @@
         int hour = cal.get(java.util.Calendar.HOUR_OF_DAY);
         String greeting;
         if (hour < 12) {
-            greeting = "Good morning, Mariya Ann Moncy";
+            greeting = "Welcome, Good morning, Mariya Ann Moncy";
         } else {
             greeting = "Good afternoon, Mariya Ann Moncy";
         }
